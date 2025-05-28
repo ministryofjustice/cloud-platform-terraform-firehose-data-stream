@@ -2,42 +2,37 @@
 # Configuration #
 #################
 
-# Add module-specific variables here
-
-########
-# Tags #
-########
-variable "business_unit" {
-  description = "Area of the MOJ responsible for the service"
+variable "cloudwatch_filter_pattern" {
   type        = string
+  description = "A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events."
+  default     = ""
 }
 
-variable "application" {
-  description = "Application name"
-  type        = string
+variable "cloudwatch_log_group_names" {
+  type        = list(string)
+  description = "List of CloudWatch Log Group names to stream logs from."
 }
 
-variable "is_production" {
-  description = "Whether this is used for production or not"
+variable "destination_bucket_arn" {
   type        = string
+  description = "ARN of the bucket for CloudWatch filters."
+  default     = ""
 }
 
-variable "team_name" {
-  description = "Team name"
+variable "destination_http_endpoint" {
   type        = string
+  description = "HTTP endpoint for CloudWatch filters."
+  default     = ""
 }
 
-variable "namespace" {
-  description = "Namespace name"
+variable "s3_compression_format" {
   type        = string
+  description = "Allow optional configuration of AWS Data Stream compression. Log Group subscription filters compress logs by default."
+  default     = "UNCOMPRESSED"
 }
 
-variable "environment_name" {
-  description = "Environment name"
-  type        = string
-}
-
-variable "infrastructure_support" {
-  description = "The team responsible for managing the infrastructure. Should be of the form <team-name> (<team-email>)"
-  type        = string
+variable "tags" {
+  type        = map(string)
+  description = "Map of tags to be applied to resources."
+  default     = {}
 }
