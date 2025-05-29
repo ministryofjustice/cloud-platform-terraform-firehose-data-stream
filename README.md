@@ -1,27 +1,36 @@
-# cloud-platform-terraform-template
+# cloud-platform-terraform-firehose-data-stream
 
 [![Releases](https://img.shields.io/github/v/release/ministryofjustice/cloud-platform-terraform-template.svg)](https://github.com/ministryofjustice/cloud-platform-terraform-template/releases)
 
-This Terraform module will _create a ..._ for use on the Cloud Platform.
+This module creates an [Amazon Data Firehose](https://aws.amazon.com/firehose/) to be used by a set of AWS CloudWatch Log Groups.
+Data is streamed from the Log Groups to either a target S3 bucket or HTTP endpoint using a Cloudwatch Log Subscription Filter.
+
+When a HTTP endpoint is specified, an `aws_secretsmanager_secret` resource is created that is polled at 10 minute intervals for credentials.
+
+The `aws_secretsmanager_secret` **value** must be populated independently of this module.
+
+Included in this module are the necessary IAM policy documents and roles for these actions, as well as a KMS key to encrypt the Data Stream.
+
+This terraform module was inspired by [modernisation-platform-terraform-aws-data-firehose](https://github.com/ministryofjustice/modernisation-platform-terraform-aws-data-firehose) module.
 
 ## Usage
 
 ```hcl
-module "template" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-template?ref=version" # use the latest release
 
-  # Configuration
-  # ...
-
-  # Tags
-  business_unit          = var.business_unit
-  application            = var.application
-  is_production          = var.is_production
-  team_name              = var.team_name
-  namespace              = var.namespace
-  environment_name       = var.environment
-  infrastructure_support = var.infrastructure_support
+module "example-s3" {
+  source                     = "github.com/ministryofjustice/modernisation-platform-terraform-aws-data-firehose"
+  cloudwatch_log_group_names = ["example-1", "example-2", "example-3"]
+  destination_bucket_arn     = aws_s3_bucket.example.arn
+  tags                       = local.tags
 }
+
+module "example-http" {
+  source                     = "github.com/ministryofjustice/modernisation-platform-terraform-aws-data-firehose"
+  cloudwatch_log_group_names = ["example-1", "example-2", "example-3"]
+  destination_http_endpoint  = "https://example-url.com/endpoint"
+  tags                       = local.tags
+}
+
 ```
 
 See the [examples/](examples/) folder for more information.
