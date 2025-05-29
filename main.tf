@@ -82,7 +82,7 @@ resource "aws_kinesis_firehose_delivery_stream" "firehose" {
   dynamic "http_endpoint_configuration" {
     for_each = var.destination_http_endpoint != "" ? [1] : []
     content {
-      buffering_size     = 1
+      buffering_size     = 5
       buffering_interval = 60
       name               = var.destination_http_endpoint
       retry_duration     = 300
