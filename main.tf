@@ -71,7 +71,7 @@ resource "aws_kinesis_firehose_delivery_stream" "firehose" {
       cloudwatch_logging_options {
         enabled         = true
         log_group_name  = aws_cloudwatch_log_group.firehose.name
-        log_stream_name = "DestinationDelivery"
+        log_stream_name = aws_cloudwatch_log_stream.firehose.name
       }
 
       dynamic_partitioning_configuration {
@@ -101,7 +101,7 @@ resource "aws_kinesis_firehose_delivery_stream" "firehose" {
       cloudwatch_logging_options {
         enabled         = true
         log_group_name  = aws_cloudwatch_log_group.firehose.name
-        log_stream_name = "DestinationDelivery"
+        log_stream_name = aws_cloudwatch_log_stream.firehose.name
       }
 
       request_configuration {
@@ -180,6 +180,11 @@ resource "aws_cloudwatch_log_group" "firehose" {
   name              = "/aws/kinesisfirehose/cloudwatch-export-${random_id.name.hex}"
   retention_in_days = 14
   tags              = var.tags
+}
+
+resource "aws_cloudwatch_log_stream" "firehose" {
+  name           = "DestinationDelivery"
+  log_group_name = aws_cloudwatch_log_group.firehose.name
 }
 
 # Cloudwatch Log Subscription Filters to stream logs from specified log groups to Firehose
