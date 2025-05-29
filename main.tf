@@ -98,6 +98,12 @@ resource "aws_kinesis_firehose_delivery_stream" "firehose" {
         compression_format = "GZIP"
       }
 
+      cloudwatch_logging_options {
+        enabled         = true
+        log_group_name  = aws_cloudwatch_log_group.firehose.name
+        log_stream_name = "DestinationDelivery"
+      }
+
       request_configuration {
         content_encoding = "GZIP"
       }
@@ -122,7 +128,7 @@ resource "aws_kinesis_firehose_delivery_stream" "firehose" {
 # Secrets Manager secret for authentication with HTTP endpoint
 resource "aws_secretsmanager_secret" "firehose" {
   kms_key_id              = aws_kms_key.firehose.id
-  name_prefix             = "cloud-platform-cloudwatch-export-${random_id.name.hex}"
+  name_prefix             = "cloud-platform-cloudwatch-export-${random_id.name.hex}-"
   recovery_window_in_days = 0
   tags                    = var.tags
 }
@@ -130,7 +136,7 @@ resource "aws_secretsmanager_secret" "firehose" {
 # S3 bucket for Firehose failed attempts to deliver logs
 # More details: https://docs.aws.amazon.com/firehose/latest/dev/retry.html
 resource "aws_s3_bucket" "firehose-errors" {
-  bucket_prefix = "cloud-platform-firehose-errors"
+  bucket_prefix = "cp-firehose-errors-${random_id.name.hex}-"
   force_destroy = true
   tags          = var.tags
 }
@@ -171,7 +177,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "firehose-errors" 
 
 # CloudWatch Log Group for Firehose delivery stream logging
 resource "aws_cloudwatch_log_group" "firehose" {
-  name              = "/aws/firehose/cloudwatch-to-s3-${random_id.name.hex}"
+  name              = "/aws/kinesisfirehose/cloudwatch-export-${random_id.name.hex}"
   retention_in_days = 14
   tags              = var.tags
 }
