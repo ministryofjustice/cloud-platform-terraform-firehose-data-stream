@@ -17,12 +17,9 @@ output "iam_roles" {
   }
 }
 
-output "iam_policy_arns" {
-  value = {
-    "cloudwatch-to-firehose" = aws_iam_policy.cloudwatch-to-firehose.arn,
-    "firehose-to-s3"         = aws_iam_policy.firehose.arn,
-    "eks-to-firehose"        = aws_iam_policy.eks-to-firehose.arn
-  }
+output "eks_to_firehose_iam_policy_arn" {
+  description = "The ARN of the eks-to-firehose IAM policy"
+  value       = aws_iam_policy.eks-to-firehose.arn
 }
 
 output "kms_key_arn" {
