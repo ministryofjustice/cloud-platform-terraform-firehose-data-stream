@@ -203,12 +203,6 @@ resource "aws_cloudwatch_log_subscription_filter" "cloudwatch-to-firehose" {
   role_arn        = aws_iam_role.cloudwatch-to-firehose.arn
 }
 
-###########################
-# Get account information #
-###########################
-data "aws_caller_identity" "current" {}
-data "aws_partition" "current" {}
-
 ###################
 # Get EKS cluster #
 ###################
