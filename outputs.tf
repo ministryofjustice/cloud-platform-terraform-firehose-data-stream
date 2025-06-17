@@ -18,6 +18,14 @@ output "iam_roles" {
   }
 }
 
+output "iam_role_arns" {
+  value = {
+    "cloudwatch-to-firehose" = aws_iam_role.cloudwatch-to-firehose.arn,
+    "firehose-to-s3"         = aws_iam_role.firehose.arn,
+    "eks-to-firehose"        = aws_iam_role.eks-to-firehose.arn
+  }
+}
+
 output "kms_key_arn" {
   value = aws_kms_key.firehose.arn
 }
