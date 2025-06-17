@@ -13,16 +13,15 @@ output "firehose_server_side_encryption_key_arn" {
 output "iam_roles" {
   value = {
     "cloudwatch-to-firehose" = aws_iam_role.cloudwatch-to-firehose,
-    "firehose-to-s3"         = aws_iam_role.firehose,
-    "eks-to-firehose"        = aws_iam_role.eks-to-firehose
+    "firehose-to-s3"         = aws_iam_role.firehose
   }
 }
 
-output "iam_role_arns" {
+output "iam_policy_arns" {
   value = {
-    "cloudwatch-to-firehose" = aws_iam_role.cloudwatch-to-firehose.arn,
-    "firehose-to-s3"         = aws_iam_role.firehose.arn,
-    "eks-to-firehose"        = aws_iam_role.eks-to-firehose.arn
+    "cloudwatch-to-firehose" = aws_iam_policy.cloudwatch-to-firehose.arn,
+    "firehose-to-s3"         = aws_iam_policy.firehose.arn,
+    "eks-to-firehose"        = aws_iam_policy.eks-to-firehose.arn
   }
 }
 
