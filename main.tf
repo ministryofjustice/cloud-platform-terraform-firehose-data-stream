@@ -54,7 +54,7 @@ resource "aws_iam_policy_attachment" "cloudwatch-to-firehose" {
 
 resource "aws_iam_policy" "eks-to-firehose" {
   name_prefix = "eks-to-firehose"
-  policy      = data.aws_iam_policy_document.ira-role-policy.json
+  policy      = data.aws_iam_policy_document.irsa-role-policy.json
   tags        = var.tags
 }
 
