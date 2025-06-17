@@ -13,7 +13,8 @@ output "firehose_server_side_encryption_key_arn" {
 output "iam_roles" {
   value = {
     "cloudwatch-to-firehose" = aws_iam_role.cloudwatch-to-firehose,
-    "firehose-to-s3"         = aws_iam_role.firehose
+    "firehose-to-s3"         = aws_iam_role.firehose,
+    "eks-to-firehose"        = aws_iam_role.eks-to-firehose
   }
 }
 
