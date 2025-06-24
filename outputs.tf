@@ -2,6 +2,10 @@ output "cloudwatch_log_group_name" {
   value = aws_cloudwatch_log_group.firehose.name
 }
 
+output "firehose_delivery_stream_name" {
+  value = aws_kinesis_firehose_delivery_stream.firehose.name
+}
+
 output "data_stream" {
   value = aws_kinesis_firehose_delivery_stream.firehose.id
 }
