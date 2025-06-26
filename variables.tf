@@ -11,7 +11,6 @@ variable "cloudwatch_filter_pattern" {
 variable "cloudwatch_log_group_names" {
   type        = list(string)
   description = "List of CloudWatch Log Group names to stream logs from."
-  default     = []
 }
 
 variable "destination_bucket_arn" {
