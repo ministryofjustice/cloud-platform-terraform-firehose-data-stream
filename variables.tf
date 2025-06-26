@@ -36,3 +36,8 @@ variable "tags" {
   description = "Map of tags to be applied to resources."
   default     = {}
 }
+
+variable "name_affix" {
+  type        = string
+  description = "Affix to append to resource names to give more meaningfulness"
+}
