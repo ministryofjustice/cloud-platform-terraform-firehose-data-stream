@@ -128,7 +128,7 @@ resource "aws_kinesis_firehose_delivery_stream" "firehose" {
 # Secrets Manager secret for authentication with HTTP endpoint
 resource "aws_secretsmanager_secret" "firehose" {
   kms_key_id              = aws_kms_key.firehose.id
-  name_prefix             = "cloud-platform-cloudwatch-export-${random_id.name.hex}-"
+  name_prefix             = "cp-cloudwatch-export-${var.name_affix}-${random_id.name.hex}-"
   recovery_window_in_days = 0
   tags                    = var.tags
 }
