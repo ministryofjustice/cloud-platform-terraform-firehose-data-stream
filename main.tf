@@ -55,7 +55,7 @@ resource "aws_iam_policy_attachment" "cloudwatch-to-firehose" {
 # Firehose delivery stream configuration
 resource "aws_kinesis_firehose_delivery_stream" "firehose" {
   destination = length(var.destination_bucket_arn) > 0 ? "extended_s3" : "http_endpoint"
-  name        = "cloud-platform-cloudwatch-export-${var.name_affix}-${random_id.name.hex}"
+  name        = "cp-cloudwatch-export-${var.name_affix}-${random_id.name.hex}"
 
   dynamic "extended_s3_configuration" {
     for_each = var.destination_bucket_arn != "" ? [1] : []
