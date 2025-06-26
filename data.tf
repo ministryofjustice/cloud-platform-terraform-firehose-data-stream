@@ -1,5 +1,4 @@
 data "aws_caller_identity" "current" {}
-data "aws_partition" "current" {}
 
 data "aws_iam_policy_document" "cloudwatch-logs-trust-policy" {
   version = "2012-10-17"
@@ -22,22 +21,6 @@ data "aws_iam_policy_document" "cloudwatch-logs-trust-policy" {
 }
 
 data "aws_iam_policy_document" "cloudwatch-logs-role-policy" {
-  version = "2012-10-17"
-
-  statement {
-    sid    = "FirehoseToDeliveryStream"
-    effect = "Allow"
-    actions = [
-      "firehose:PutRecord",
-      "firehose:PutRecordBatch"
-    ]
-    resources = [
-      aws_kinesis_firehose_delivery_stream.firehose.arn
-    ]
-  }
-}
-
-data "aws_iam_policy_document" "irsa-role-policy" {
   version = "2012-10-17"
 
   statement {

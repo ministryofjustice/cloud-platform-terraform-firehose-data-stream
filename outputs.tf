@@ -21,11 +21,6 @@ output "iam_roles" {
   }
 }
 
-output "eks_to_firehose_iam_policy_arn" {
-  description = "The ARN of the eks-to-firehose IAM policy"
-  value       = aws_iam_policy.eks-to-firehose.arn
-}
-
 output "kms_key_arn" {
   value = aws_kms_key.firehose.arn
 }

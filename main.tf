@@ -52,12 +52,6 @@ resource "aws_iam_policy_attachment" "cloudwatch-to-firehose" {
   roles      = [aws_iam_role.cloudwatch-to-firehose.name]
 }
 
-resource "aws_iam_policy" "eks-to-firehose" {
-  name_prefix = "eks-to-firehose"
-  policy      = data.aws_iam_policy_document.irsa-role-policy.json
-  tags        = var.tags
-}
-
 # Firehose delivery stream configuration
 resource "aws_kinesis_firehose_delivery_stream" "firehose" {
   destination = length(var.destination_bucket_arn) > 0 ? "extended_s3" : "http_endpoint"
