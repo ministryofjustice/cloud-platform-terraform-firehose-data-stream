@@ -89,7 +89,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_cloudwatch_filter_pattern"></a> [cloudwatch\_filter\_pattern](#input\_cloudwatch\_filter\_pattern) | A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events. | `string` | `""` | no |
-| <a name="input_cloudwatch_log_group_names"></a> [cloudwatch\_log\_group\_names](#input\_cloudwatch\_log\_group\_names) | List of CloudWatch Log Group names to stream logs from. | `list(string)` | n/a | yes |
+| <a name="input_cloudwatch_log_group_names"></a> [cloudwatch\_log\_group\_names](#input\_cloudwatch\_log\_group\_names) | List of CloudWatch Log Group names to stream logs from. | `list(string)` | n/a | no |
 | <a name="input_destination_bucket_arn"></a> [destination\_bucket\_arn](#input\_destination\_bucket\_arn) | ARN of the bucket for CloudWatch filters. | `string` | `""` | no |
 | <a name="input_destination_http_endpoint"></a> [destination\_http\_endpoint](#input\_destination\_http\_endpoint) | HTTP endpoint for CloudWatch filters. | `string` | `""` | no |
 | <a name="input_s3_compression_format"></a> [s3\_compression\_format](#input\_s3\_compression\_format) | Allow optional configuration of AWS Data Stream compression. Log Group subscription filters compress logs by default. | `string` | `"UNCOMPRESSED"` | no |

@@ -8,9 +8,13 @@ variable "cloudwatch_filter_pattern" {
   default     = ""
 }
 
+# NOTE: this variable deals with single and multiple log groups at the time of TF apply
+# Do not provide this input if the resource sending logs to XSIAM Cortex generates continuous log groups
+# Instead, create subscription filters directly from the resource or module that generates the log groups
 variable "cloudwatch_log_group_names" {
   type        = list(string)
   description = "List of CloudWatch Log Group names to stream logs from."
+  default     = []
 }
 
 variable "destination_bucket_arn" {
