@@ -188,8 +188,9 @@ resource "aws_cloudwatch_log_stream" "firehose" {
 }
 
 # Cloudwatch Log Subscription Filters to stream logs from specified log groups to Firehose
+# IF no log groups are provided during mod call, no subscription filters are created
 resource "aws_cloudwatch_log_subscription_filter" "cloudwatch-to-firehose" {
-  count           = length(var.cloudwatch_log_group_names)
+  count           = length(var.cloudwatch_log_group_names) > 0 ? length(var.cloudwatch_log_group_names) : 0
   destination_arn = aws_kinesis_firehose_delivery_stream.firehose.arn
   filter_pattern  = var.cloudwatch_filter_pattern
   log_group_name  = element(var.cloudwatch_log_group_names, count.index)
