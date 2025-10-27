@@ -65,7 +65,8 @@ resource "aws_kinesis_firehose_delivery_stream" "firehose" {
       buffering_interval  = 60
       compression_format  = var.s3_compression_format
       role_arn            = aws_iam_role.firehose.arn
-      prefix              = "logs/!{timestamp:yyyy/MM/dd}/"
+      prefix = "logs/!{partitionKeyFromQuery:rds_instance}/!{timestamp:yyyy/MM/dd}/"
+      # prefix              = "logs/!{timestamp:yyyy/MM/dd}/"
       error_output_prefix = "errors/!{firehose:error-output-type}/!{timestamp:yyyy/MM/dd}/"
 
       cloudwatch_logging_options {
@@ -75,7 +76,36 @@ resource "aws_kinesis_firehose_delivery_stream" "firehose" {
       }
 
       dynamic_partitioning_configuration {
-        enabled = false
+        enabled = true
+      }
+
+      processing_configuration {
+        enabled = true
+        # processors {
+        #   type = "RecordDeAggregation"
+        #   parameters {
+        #     parameter_name  = "SubRecordType"
+        #     parameter_value = "CloudWatchLogs"
+        #   }
+        # }
+        # processors {
+        #   type = "Decompression"
+        #   parameters {
+        #     parameter_name  = "CompressionFormat"
+        #     parameter_value = "GZIP"
+        #   }
+        # }
+        processors {
+          type = "MetadataExtraction"
+          parameters {
+            parameter_name  = "MetadataExtractionQuery"
+            parameter_value = "{rds_instance:.logStream}"
+          }
+          parameters {
+            parameter_name  = "JsonParsingEngine"
+            parameter_value = "JQ-1.6"
+          }
+        }
       }
     }
   }
